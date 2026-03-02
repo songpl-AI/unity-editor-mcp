@@ -1,0 +1,20 @@
+{
+  "name": "com.unity-editor-mcp.plugin",
+  "version": "1.0.0",
+  "displayName": "Unity Editor MCP",
+  "description": "HTTP + WebSocket server that enables AI coding tools to control Unity Editor via MCP protocol. Compatible with Claude Code, Cursor, Continue, and any MCP-compatible tool.",
+  "unity": "2021.3",
+  "keywords": ["mcp", "ai", "editor", "claude", "cursor"],
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

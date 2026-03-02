@@ -1,0 +1,8 @@
+mcp-server/node_modules/
+mcp-server/dist/
+
+# Unity
+unity-plugin/**/*.meta
+unity-plugin/Library/
+unity-plugin/Temp/
+unity-plugin/obj/

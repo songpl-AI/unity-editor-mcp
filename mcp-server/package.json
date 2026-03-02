@@ -1,0 +1,27 @@
+{
+  "name": "unity-editor-mcp",
+  "version": "1.0.0",
+  "description": "MCP Server for Unity Editor — control Unity Editor from Claude Code, Cursor, Continue, and any MCP-compatible AI tool.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "unity-editor-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "keywords": ["mcp", "unity", "editor", "claude", "cursor", "ai", "game-development"],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "ws": "^8.18.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.7.0"
+  }
+}
