@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 主线程调度器（MainThreadDispatcher）
 - Undo 系统集成
 
+### Fixed
+
+- **Critical Bug:** 修复参数化路由无法匹配的问题（`RequestRouter.cs`）
+  - 影响所有包含 `:param` 的路由（5 个 GameObject 组件相关端点）
+  - 根本原因：`Regex.Escape()` 不会转义冒号 `:`，导致路由模式无法匹配实际请求
+  - 解决方案：修改正则表达式从 `@"\\:(\w+)"` 为 `@"(?:\\:|:)(\w+)"`，同时支持转义和未转义的冒号
+
 ### Supported Operations
 
 - 场景管理（获取信息、层级结构、保存场景）

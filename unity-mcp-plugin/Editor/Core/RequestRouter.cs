@@ -68,13 +68,13 @@ namespace OpenMCP.UnityPlugin
                 // 将 :param 转为命名捕获组，其余字符转义
                 var paramNames = new List<string>();
 
-                // 先转义特殊字符，Regex.Escape 会把 : 转义成 \:
+                // 先转义特殊字符（注意：Regex.Escape 不会转义冒号 :）
                 var escaped = Regex.Escape(pattern);
 
-                // 然后将 \:param 替换为命名捕获组
+                // 然后将 :param 替换为命名捕获组（兼容转义和未转义的冒号）
                 var regexStr = "^" + Regex.Replace(
                     escaped,
-                    @"\\:(\w+)",  // 匹配被转义的 \:param
+                    @"(?:\\:|:)(\w+)",  // 匹配 \:param 或 :param（兼容性修复）
                     m => { paramNames.Add(m.Groups[1].Value); return $"(?<{m.Groups[1].Value}>[^/]+)"; }
                 ) + "$";
 
