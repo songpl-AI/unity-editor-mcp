@@ -75,7 +75,7 @@ namespace OpenMCP.UnityPlugin
 
         private static void Startup(bool isManualRestart = false)
         {
-            Debug.Log("[OpenClaw] Starting Unity Editor Plugin...");
+            Debug.Log("[OpenMCP] Starting Unity Editor Plugin...");
 
             // 1. 主线程调度器（最先初始化，其他组件依赖它）
             MainThreadDispatcher.Initialize();
@@ -107,19 +107,19 @@ namespace OpenMCP.UnityPlugin
             _httpServer = new HttpServer(router, wsServer);
             if (!_httpServer.Start())
             {
-                Debug.LogError("[OpenClaw] Failed to start HTTP server. Plugin is inactive.");
+                Debug.LogError("[OpenMCP] Failed to start HTTP server. Plugin is inactive.");
                 AddDashboardLog("ERROR: Failed to start HTTP server");
                 return;
             }
 
             var msg = $"Server started — HTTP:{_httpServer.Port}  WS:{_httpServer.Port + 1}";
-            Debug.Log($"[OpenClaw] Plugin ready. HTTP: http://127.0.0.1:{_httpServer.Port}/api/v1  WS: ws://127.0.0.1:{_httpServer.Port + 1}/ws");
+            Debug.Log($"[OpenMCP] Plugin ready. HTTP: http://127.0.0.1:{_httpServer.Port}/api/v1  WS: ws://127.0.0.1:{_httpServer.Port + 1}/ws");
             AddDashboardLog(msg);
         }
 
         private static void Shutdown()
         {
-            Debug.Log("[OpenClaw] Shutting down...");
+            Debug.Log("[OpenMCP] Shutting down...");
             AddDashboardLog("Server stopped");
             ConsoleLogger.Shutdown();
             CompilationListener.Shutdown();
@@ -222,7 +222,7 @@ namespace OpenMCP.UnityPlugin
             router.Register("POST", "/api/v1/package/add",    packageHandler.HandleAdd);
             router.Register("POST", "/api/v1/package/remove", packageHandler.HandleRemove);
 
-            Debug.Log($"[OpenClaw] Registered {router.RouteCount} routes.");
+            Debug.Log($"[OpenMCP] Registered {router.RouteCount} routes.");
         }
     }
 }

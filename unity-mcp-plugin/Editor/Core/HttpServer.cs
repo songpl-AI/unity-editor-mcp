@@ -39,17 +39,17 @@ namespace OpenMCP.UnityPlugin
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[OpenClaw] HttpListener failed to start on port {Port}: {ex.Message}");
+                Debug.LogError($"[OpenMCP] HttpListener failed to start on port {Port}: {ex.Message}");
                 return false;
             }
 
             _wsServer.Start(Port);
 
             _running = true;
-            _listenerThread = new Thread(ListenLoop) { IsBackground = true, Name = "OpenClaw-HTTP" };
+            _listenerThread = new Thread(ListenLoop) { IsBackground = true, Name = "OpenMCP-HTTP" };
             _listenerThread.Start();
 
-            Debug.Log($"[OpenClaw] Server started on port {Port}");
+            Debug.Log($"[OpenMCP] Server started on port {Port}");
             return true;
         }
 
@@ -63,7 +63,7 @@ namespace OpenMCP.UnityPlugin
             }
             catch { /* 忽略关闭异常 */ }
             _wsServer?.Stop();
-            Debug.Log("[OpenClaw] Server stopped");
+            Debug.Log("[OpenMCP] Server stopped");
         }
 
         public void Dispose() => Stop();
@@ -97,7 +97,7 @@ namespace OpenMCP.UnityPlugin
                 catch (Exception ex)
                 {
                     if (_running)
-                        Debug.LogWarning($"[OpenClaw] HttpListener error: {ex.Message}");
+                        Debug.LogWarning($"[OpenMCP] HttpListener error: {ex.Message}");
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace OpenMCP.UnityPlugin
                 }
                 catch { /* 端口被占用，继续尝试下一个 */ }
             }
-            throw new InvalidOperationException($"[OpenClaw] No available port found in range {start}~{start + 9}");
+            throw new InvalidOperationException($"[OpenMCP] No available port found in range {start}~{start + 9}");
         }
     }
 }

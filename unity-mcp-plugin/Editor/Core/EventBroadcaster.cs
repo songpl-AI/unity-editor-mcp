@@ -47,7 +47,7 @@ namespace OpenMCP.UnityPlugin
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"[OpenClaw] EventBroadcaster failed to send '{eventName}': {ex.Message}");
+                Debug.LogWarning($"[OpenMCP] EventBroadcaster failed to send '{eventName}': {ex.Message}");
             }
         }
     }

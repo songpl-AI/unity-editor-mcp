@@ -42,7 +42,7 @@ namespace OpenMCP.UnityPlugin
             }
             catch (TaskCanceledException)
             {
-                throw new OperationCanceledException("[OpenClaw] MainThreadDispatcher was shut down while waiting.");
+                throw new OperationCanceledException("[OpenMCP] MainThreadDispatcher was shut down while waiting.");
             }
         }
 

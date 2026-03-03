@@ -66,12 +66,18 @@ namespace OpenMCP.UnityPlugin
                 EventBroadcaster.Broadcast("console_log", dto);
         }
 
-        private static string MapLogType(LogType type) => type switch
+        private static string MapLogType(LogType type)
         {
-            LogType.Warning   => "warning",
-            LogType.Error     => "error",
-            LogType.Exception => "error",
-            _                 => "log"
-        };
+            switch (type)
+            {
+                case LogType.Warning:
+                    return "warning";
+                case LogType.Error:
+                case LogType.Exception:
+                    return "error";
+                default:
+                    return "log";
+            }
+        }
     }
 }

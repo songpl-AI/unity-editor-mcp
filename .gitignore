@@ -2,8 +2,8 @@ mcp-server/node_modules/
 mcp-server/dist/
 
 # Unity
-unity-plugin/**/*.meta
-unity-plugin/Library/
-unity-plugin/Temp/
-unity-plugin/obj/
+unity-mcp-plugin/**/*.meta
+unity-mcp-plugin/Library/
+unity-mcp-plugin/Temp/
+unity-mcp-plugin/obj/
 .DS_Store

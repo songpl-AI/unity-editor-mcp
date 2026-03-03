@@ -6,7 +6,7 @@
 
 | 依赖 | 版本 |
 |------|------|
-| Unity Editor | 2021.3 LTS+ |
+| Unity Editor | 2020.3 LTS+ |
 | Node.js | 18+ |
 | npm | 8+ |
 
@@ -70,19 +70,19 @@ bash install.sh
 Unity > Window > Package Manager > `+` > Add package from git URL：
 
 ```
-https://github.com/yourname/unity-editor-mcp.git?path=unity-plugin
+https://github.com/yourname/unity-editor-mcp.git?path=unity-mcp-plugin
 ```
 
 **方式 B — 手动复制**
 
 ```bash
 # macOS / Linux
-cp -r unity-plugin  /path/to/YourUnityProject/Assets/
+cp -r unity-mcp-plugin  /path/to/YourUnityProject/Assets/
 ```
 
 ```powershell
 # Windows（PowerShell）
-Copy-Item -Recurse unity-plugin C:\path\to\YourUnityProject\Assets\
+Copy-Item -Recurse unity-mcp-plugin C:\path\to\YourUnityProject\Assets\
 ```
 
 然后在 `Packages/manifest.json` 的 `dependencies` 中添加：
@@ -186,7 +186,7 @@ AI Tool (Claude Code / Cursor / ...)
     ↓  MCP stdio
 MCP Server  (mcp-server/)  — Node.js + TypeScript
     ↓  HTTP REST + WebSocket
-Unity Plugin (unity-plugin/) — C# Editor-only
+Unity Plugin (unity-mcp-plugin/) — C# Editor-only
     ↓  Unity Editor API
 Unity Editor
 ```
@@ -207,8 +207,8 @@ Unity Editor
 **`unity_compile` 超时（60s）**
 → Unity 正在进行 Domain Reload，等待编译完成后重试。大型项目可在 prompt 中指定 `timeoutSeconds: 120`。
 
-**Unity 2021.3 WebSocket 不可用**
-→ 2022.3+ 内置 WebSocket，无需额外操作。2021.3 需手动下载 `websocket-sharp.dll` 放入 `Assets/unity-plugin/Plugins/`，并在 Player Settings > Scripting Define Symbols 中添加 `WEBSOCKET_SHARP`。
+**Unity 2020.3 / 2021.x WebSocket 不可用**
+→ 2022.3+ 内置 WebSocket，无需额外操作。2020.3 / 2021.x 需手动下载 `websocket-sharp.dll` 放入 `Assets/unity-mcp-plugin/Plugins/`，并在 Player Settings > Scripting Define Symbols 中添加 `WEBSOCKET_SHARP`。
 
 ---
 

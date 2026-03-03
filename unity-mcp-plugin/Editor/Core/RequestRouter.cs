@@ -40,7 +40,7 @@ namespace OpenMCP.UnityPlugin
                     }
                     catch (Exception ex)
                     {
-                        UnityEngine.Debug.LogError($"[OpenClaw] Handler error for {method} {rawPath}: {ex}");
+                        UnityEngine.Debug.LogError($"[OpenMCP] Handler error for {method} {rawPath}: {ex}");
                         ResponseHelper.WriteServerError(ctx.Response, ex);
                     }
                     return;

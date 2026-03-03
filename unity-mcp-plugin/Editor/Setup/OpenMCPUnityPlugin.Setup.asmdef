@@ -1,5 +1,5 @@
 {
-    "name": "OpenClawUnityPlugin.Setup",
+    "name": "OpenMCPUnityPlugin.Setup",
     "rootNamespace": "OpenMCP.UnityPlugin.Setup",
     "references": [],
     "includePlatforms": [

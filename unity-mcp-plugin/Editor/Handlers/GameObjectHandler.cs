@@ -127,7 +127,7 @@ namespace OpenMCP.UnityPlugin
 
         public void HandleGetComponents(HttpContext ctx)
         {
-            var path = ctx.PathParams.GetValueOrDefault("path", "");
+            var path = ctx.PathParams.TryGetValue("path", out var pathValue) ? pathValue : "";
             var data = MainThreadDispatcher.Dispatch(() =>
             {
                 var go = GameObject.Find(path);
@@ -142,8 +142,8 @@ namespace OpenMCP.UnityPlugin
 
         public void HandleGetComponentValues(HttpContext ctx)
         {
-            var path = ctx.PathParams.GetValueOrDefault("path", "");
-            var type = ctx.PathParams.GetValueOrDefault("type", "");
+            var path = ctx.PathParams.TryGetValue("path", out var pathValue) ? pathValue : "";
+            var type = ctx.PathParams.TryGetValue("type", out var typeValue) ? typeValue : "";
             var data = MainThreadDispatcher.Dispatch(() =>
             {
                 var go   = GameObject.Find(path);
@@ -166,7 +166,7 @@ namespace OpenMCP.UnityPlugin
 
         public void HandleAddComponent(HttpContext ctx)
         {
-            var path = ctx.PathParams.GetValueOrDefault("path", "");
+            var path = ctx.PathParams.TryGetValue("path", out var pathValue) ? pathValue : "";
             var req  = ctx.ParseBody<ComponentTypeRequest>();
             MainThreadDispatcher.Dispatch(() =>
             {
@@ -182,7 +182,7 @@ namespace OpenMCP.UnityPlugin
 
         public void HandleRemoveComponent(HttpContext ctx)
         {
-            var path = ctx.PathParams.GetValueOrDefault("path", "");
+            var path = ctx.PathParams.TryGetValue("path", out var pathValue) ? pathValue : "";
             var req  = ctx.ParseBody<ComponentTypeRequest>();
             MainThreadDispatcher.Dispatch(() =>
             {
@@ -198,8 +198,8 @@ namespace OpenMCP.UnityPlugin
 
         public void HandleSetComponentValues(HttpContext ctx)
         {
-            var path = ctx.PathParams.GetValueOrDefault("path", "");
-            var type = ctx.PathParams.GetValueOrDefault("type", "");
+            var path = ctx.PathParams.TryGetValue("path", out var pathValue) ? pathValue : "";
+            var type = ctx.PathParams.TryGetValue("type", out var typeValue) ? typeValue : "";
             var req  = ctx.ParseBody<SetComponentValuesRequest>();
 
             if (req?.Values == null || req.Values.Count == 0)
@@ -251,19 +251,32 @@ namespace OpenMCP.UnityPlugin
             return path;
         }
 
-        private static object SerializedPropertyToObject(SerializedProperty p) => p.propertyType switch
+        private static object SerializedPropertyToObject(SerializedProperty p)
         {
-            SerializedPropertyType.Integer   => p.intValue,
-            SerializedPropertyType.Float     => p.floatValue,
-            SerializedPropertyType.Boolean   => p.boolValue,
-            SerializedPropertyType.String    => p.stringValue,
-            SerializedPropertyType.Color     => new { r = p.colorValue.r, g = p.colorValue.g, b = p.colorValue.b, a = p.colorValue.a },
-            SerializedPropertyType.Vector2   => new { x = p.vector2Value.x, y = p.vector2Value.y },
-            SerializedPropertyType.Vector3   => new { x = p.vector3Value.x, y = p.vector3Value.y, z = p.vector3Value.z },
-            SerializedPropertyType.Enum      => p.enumDisplayNames.Length > p.enumValueIndex ? p.enumDisplayNames[p.enumValueIndex] : p.enumValueIndex.ToString(),
-            SerializedPropertyType.ObjectReference => p.objectReferenceValue != null ? p.objectReferenceValue.name : null,
-            _                                => p.propertyType.ToString()
-        };
+            switch (p.propertyType)
+            {
+                case SerializedPropertyType.Integer:
+                    return p.intValue;
+                case SerializedPropertyType.Float:
+                    return p.floatValue;
+                case SerializedPropertyType.Boolean:
+                    return p.boolValue;
+                case SerializedPropertyType.String:
+                    return p.stringValue;
+                case SerializedPropertyType.Color:
+                    return new { r = p.colorValue.r, g = p.colorValue.g, b = p.colorValue.b, a = p.colorValue.a };
+                case SerializedPropertyType.Vector2:
+                    return new { x = p.vector2Value.x, y = p.vector2Value.y };
+                case SerializedPropertyType.Vector3:
+                    return new { x = p.vector3Value.x, y = p.vector3Value.y, z = p.vector3Value.z };
+                case SerializedPropertyType.Enum:
+                    return p.enumDisplayNames.Length > p.enumValueIndex ? p.enumDisplayNames[p.enumValueIndex] : p.enumValueIndex.ToString();
+                case SerializedPropertyType.ObjectReference:
+                    return p.objectReferenceValue != null ? p.objectReferenceValue.name : null;
+                default:
+                    return p.propertyType.ToString();
+            }
+        }
 
         private static Type FindTypeInAssemblies(string typeName)
         {

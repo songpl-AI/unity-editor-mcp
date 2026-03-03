@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 // websocket-sharp 通过 UPM 或手动引入：https://github.com/sta/websocket-sharp
-// 引入后此文件自动启用（Unity 2021.3 下 UNITY_2022_3_OR_NEWER 未定义）
+// 引入后此文件自动启用（Unity 2020.3 / 2021.x 下 UNITY_2022_3_OR_NEWER 未定义）
 #if WEBSOCKET_SHARP
 using WebSocketSharp.Server;
 using WebSocketSharp;
@@ -11,7 +11,7 @@ using WebSocketSharp;
 namespace OpenMCP.UnityPlugin
 {
     /// <summary>
-    /// Unity 2021.3 使用 websocket-sharp 实现 WebSocket 服务端。
+    /// Unity 2020.3 / 2021.x 使用 websocket-sharp 实现 WebSocket 服务端。
     /// 需要在项目中引入 websocket-sharp 包并定义 WEBSOCKET_SHARP 脚本符号。
     /// </summary>
     public class SharpWebSocketServer : IWebSocketServer
@@ -23,13 +23,13 @@ namespace OpenMCP.UnityPlugin
         {
             int wsPort = httpPort + 1;
             _server = new WebSocketSharp.Server.WebSocketServer($"ws://127.0.0.1:{wsPort}");
-            _server.AddWebSocketService<OpenClawBehavior>("/ws", behavior =>
+            _server.AddWebSocketService<OpenMCPBehavior>("/ws", behavior =>
             {
                 behavior.OnOpenCallback  = s => { lock (_sessions) _sessions.Add(s); };
                 behavior.OnCloseCallback = s => { lock (_sessions) _sessions.Remove(s); };
             });
             _server.Start();
-            Debug.Log($"[OpenClaw] WebSocket server (websocket-sharp) started on port {wsPort}");
+            Debug.Log($"[OpenMCP] WebSocket server (websocket-sharp) started on port {wsPort}");
         }
 
         public void Broadcast(string json)
@@ -43,7 +43,7 @@ namespace OpenMCP.UnityPlugin
         }
     }
 
-    internal class OpenClawBehavior : WebSocketBehavior
+    internal class OpenMCPBehavior : WebSocketBehavior
     {
         internal Action<IWebSocketSession> OnOpenCallback;
         internal Action<IWebSocketSession> OnCloseCallback;
@@ -62,7 +62,7 @@ namespace OpenMCP.UnityPlugin
     public class SharpWebSocketServer : IWebSocketServer
     {
         public void Start(int httpPort)
-            => UnityEngine.Debug.LogWarning("[OpenClaw] WebSocket unavailable on Unity 2021.3: websocket-sharp not found. " +
+            => UnityEngine.Debug.LogWarning("[OpenMCP] WebSocket unavailable (Unity < 2022.3): websocket-sharp not found. " +
                                             "Add websocket-sharp and define WEBSOCKET_SHARP scripting symbol to enable.");
         public void Broadcast(string json) { }
         public void Stop() { }

@@ -61,7 +61,7 @@ namespace OpenMCP.UnityPlugin
                 return;
             }
 
-            Debug.Log($"[OpenClaw Package] Installing: {req.PackageId}");
+            Debug.Log($"[OpenMCP Package] Installing: {req.PackageId}");
 
             var request = MainThreadDispatcher.Dispatch(() => Client.Add(req.PackageId));
 
@@ -79,7 +79,7 @@ namespace OpenMCP.UnityPlugin
             }
 
             var pkg = request.Result;
-            Debug.Log($"[OpenClaw Package] Installed: {pkg.packageId} v{pkg.version}");
+            Debug.Log($"[OpenMCP Package] Installed: {pkg.packageId} v{pkg.version}");
 
             ResponseHelper.WriteSuccess(ctx.Response, new
             {
@@ -102,7 +102,7 @@ namespace OpenMCP.UnityPlugin
                 return;
             }
 
-            Debug.Log($"[OpenClaw Package] Removing: {req.PackageId}");
+            Debug.Log($"[OpenMCP Package] Removing: {req.PackageId}");
 
             var request = MainThreadDispatcher.Dispatch(() => Client.Remove(req.PackageId));
 
@@ -119,7 +119,7 @@ namespace OpenMCP.UnityPlugin
                 return;
             }
 
-            Debug.Log($"[OpenClaw Package] Removed: {req.PackageId}");
+            Debug.Log($"[OpenMCP Package] Removed: {req.PackageId}");
 
             ResponseHelper.WriteSuccess(ctx.Response, new
             {

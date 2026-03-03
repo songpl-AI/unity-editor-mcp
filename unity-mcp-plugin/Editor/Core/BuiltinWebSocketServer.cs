@@ -36,14 +36,14 @@ namespace OpenMCP.UnityPlugin
             }
             catch (Exception ex)
             {
-                Debug.LogError($"[OpenClaw] WebSocket listener failed on port {wsPort}: {ex.Message}");
+                Debug.LogError($"[OpenMCP] WebSocket listener failed on port {wsPort}: {ex.Message}");
                 return;
             }
 
             _running      = true;
-            _acceptThread = new Thread(AcceptLoop) { IsBackground = true, Name = "OpenClaw-WS-Accept" };
+            _acceptThread = new Thread(AcceptLoop) { IsBackground = true, Name = "OpenMCP-WS-Accept" };
             _acceptThread.Start();
-            Debug.Log($"[OpenClaw] WebSocket server started on port {wsPort}");
+            Debug.Log($"[OpenMCP] WebSocket server started on port {wsPort}");
         }
 
         public void Broadcast(string json)
@@ -80,7 +80,7 @@ namespace OpenMCP.UnityPlugin
                 catch (Exception ex)
                 {
                     if (_running)
-                        Debug.LogWarning($"[OpenClaw] WS accept error: {ex.Message}");
+                        Debug.LogWarning($"[OpenMCP] WS accept error: {ex.Message}");
                 }
             }
         }
@@ -122,20 +122,20 @@ namespace OpenMCP.UnityPlugin
                     $"Sec-WebSocket-Accept: {accept}\r\n\r\n");
 
                 _clients[id] = stream;
-                Debug.Log($"[OpenClaw] WebSocket client connected: {id}");
+                Debug.Log($"[OpenMCP] WebSocket client connected: {id}");
 
                 // 4. 读帧循环（只处理关闭帧，其余忽略——服务端只需推送）
                 ReceiveLoop(stream, id);
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"[OpenClaw] WS client {id} error: {ex.Message}");
+                Debug.LogWarning($"[OpenMCP] WS client {id} error: {ex.Message}");
             }
             finally
             {
                 _clients.TryRemove(id, out _);
                 try { stream?.Close(); tcp.Close(); } catch { /* ignore */ }
-                Debug.Log($"[OpenClaw] WebSocket client disconnected: {id}");
+                Debug.Log($"[OpenMCP] WebSocket client disconnected: {id}");
             }
         }
 
