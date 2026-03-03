@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     public class StatusHandler
     {

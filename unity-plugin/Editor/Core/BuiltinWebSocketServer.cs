@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// Unity 2022.3+ WebSocket 服务端实现。

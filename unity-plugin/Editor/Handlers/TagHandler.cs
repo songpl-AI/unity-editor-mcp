@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 处理 Tag 相关的 API 请求

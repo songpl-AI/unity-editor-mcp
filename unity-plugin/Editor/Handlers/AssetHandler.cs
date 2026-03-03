@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     public class AssetHandler
     {

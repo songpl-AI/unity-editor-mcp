@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using Newtonsoft.Json;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// HTTP 响应写入工具。所有 Handler 通过此类返回响应，确保格式统一。

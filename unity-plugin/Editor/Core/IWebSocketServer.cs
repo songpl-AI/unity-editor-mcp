@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// WebSocket 服务端统一接口。

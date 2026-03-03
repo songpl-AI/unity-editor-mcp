@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.Compilation;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 监听 Unity 编译事件，将结果缓存并通过 EventBroadcaster 推送到 WebSocket 客户端。
@@ -21,22 +21,38 @@ namespace OpenClaw.UnityPlugin
 
         static CompilationListener()
         {
-            CompilationPipeline.compilationStarted        += OnCompilationStarted;
-            CompilationPipeline.assemblyCompilationFinished += OnAssemblyCompiled;
-            CompilationPipeline.compilationFinished       += OnAllCompilationFinished;
+            Register();
+        }
+
+        /// <summary>
+        /// 手动重新注册编译事件（用于服务器手动重启后恢复监听）。
+        /// 内部先执行 Shutdown 防止重复注册。
+        /// </summary>
+        public static void Initialize()
+        {
+            Shutdown();
+            Register();
         }
 
         public static void Shutdown()
         {
-            CompilationPipeline.compilationStarted        -= OnCompilationStarted;
+            CompilationPipeline.compilationStarted          -= OnCompilationStarted;
             CompilationPipeline.assemblyCompilationFinished -= OnAssemblyCompiled;
-            CompilationPipeline.compilationFinished       -= OnAllCompilationFinished;
+            CompilationPipeline.compilationFinished         -= OnAllCompilationFinished;
+        }
+
+        private static void Register()
+        {
+            CompilationPipeline.compilationStarted          += OnCompilationStarted;
+            CompilationPipeline.assemblyCompilationFinished += OnAssemblyCompiled;
+            CompilationPipeline.compilationFinished         += OnAllCompilationFinished;
         }
 
         private static void OnCompilationStarted(object context)
         {
             _currentErrors.Clear();
             _status = CompileStatus.Compiling;
+            UnityEditorServer.AddDashboardLog("Compile started");
             EventBroadcaster.Broadcast("compile_started");
         }
 
@@ -63,11 +79,13 @@ namespace OpenClaw.UnityPlugin
             if (errors.Length > 0)
             {
                 _status = CompileStatus.Failed;
+                UnityEditorServer.AddDashboardLog($"Compile FAILED — {errors.Length} error(s), {warnings.Length} warning(s)");
                 EventBroadcaster.Broadcast("compile_failed", new { errors, warnings });
             }
             else
             {
                 _status = CompileStatus.Success;
+                UnityEditorServer.AddDashboardLog($"Compile OK — {warnings.Length} warning(s)");
                 EventBroadcaster.Broadcast("compile_complete", new { warnings });
             }
         }

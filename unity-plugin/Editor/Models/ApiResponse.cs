@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 所有 HTTP 响应的统一包装格式

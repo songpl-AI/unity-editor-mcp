@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     // DTO 规则：禁止直接序列化 Unity 类型（Vector3、Transform 等），全部转为此处的 DTO
 

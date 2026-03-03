@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 捕获 Unity Console 日志，存入定容环形缓冲区，并通过 WebSocket 实时推送。

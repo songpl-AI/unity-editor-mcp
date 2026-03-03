@@ -6,3 +6,4 @@ unity-plugin/**/*.meta
 unity-plugin/Library/
 unity-plugin/Temp/
 unity-plugin/obj/
+.DS_Store

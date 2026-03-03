@@ -8,7 +8,7 @@ using UnityEngine;
 using WebSocketSharp.Server;
 using WebSocketSharp;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// Unity 2021.3 使用 websocket-sharp 实现 WebSocket 服务端。
@@ -53,7 +53,7 @@ namespace OpenClaw.UnityPlugin
     }
 }
 #else
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// websocket-sharp 未引入时的空实现（功能降级：无 WebSocket 推送，仍可 HTTP 轮询）。

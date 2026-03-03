@@ -1,6 +1,6 @@
 {
     "name": "OpenClawUnityPlugin.Editor",
-    "rootNamespace": "OpenClaw.UnityPlugin",
+    "rootNamespace": "OpenMCP.UnityPlugin",
     "references": [],
     "includePlatforms": [
         "Editor"

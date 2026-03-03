@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEditor.Compilation;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     public class EditorHandler
     {

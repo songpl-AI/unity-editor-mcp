@@ -3,7 +3,7 @@ using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin.Setup
+namespace OpenMCP.UnityPlugin.Setup
 {
     /// <summary>
     /// Automatically installs Newtonsoft.Json (com.unity.nuget.newtonsoft-json) on first import.

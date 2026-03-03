@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 处理项目设置相关的 API 请求

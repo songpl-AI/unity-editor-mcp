@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 文件读写 Handler。路径安全限制：只允许访问 Assets/ 目录下的文件。

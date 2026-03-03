@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     public class ProjectHandler
     {

@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 处理材质和渲染管线相关的 API 请求。
@@ -78,8 +78,10 @@ namespace OpenClaw.UnityPlugin
 
                         case ShaderUtil.ShaderPropertyType.Range:
                             value = mat.GetFloat(propName);
-                            ShaderUtil.GetRangeLimits(shader, i, out float minV, out float maxV);
-                            range = new { min = minV, max = maxV };
+                            // Unity 6+ API: GetRangeLimits(shader, idx, limitType) returns float
+                            // limitType 1 = min, 2 = max
+                            range = new { min = ShaderUtil.GetRangeLimits(shader, i, 1),
+                                          max = ShaderUtil.GetRangeLimits(shader, i, 2) };
                             break;
 
                         case ShaderUtil.ShaderPropertyType.TexEnv:

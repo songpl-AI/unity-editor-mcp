@@ -4,7 +4,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// URL 路由器，支持静态路径（/api/v1/status）和参数路径（/api/v1/gameobject/:path/components）。

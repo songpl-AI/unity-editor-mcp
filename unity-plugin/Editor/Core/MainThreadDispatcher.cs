@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using UnityEditor;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 将后台线程的操作调度到 Unity 主线程执行。

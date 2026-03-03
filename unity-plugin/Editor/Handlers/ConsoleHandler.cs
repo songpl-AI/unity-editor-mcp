@@ -1,4 +1,4 @@
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     public class ConsoleHandler
     {

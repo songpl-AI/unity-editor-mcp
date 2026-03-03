@@ -1,20 +1,54 @@
+using System;
+using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.Compilation;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 插件入口。[InitializeOnLoad] 确保 Unity Editor 启动及 Domain Reload 后自动运行。
     /// 负责按依赖顺序初始化和关闭所有核心组件。
-    /// Version: 1.1.0 - Added Tag and Settings APIs
+    /// Version: 1.2.0 - Added Dashboard Window support
     /// </summary>
     [InitializeOnLoad]
     public static class UnityEditorServer
     {
         private static HttpServer _httpServer;
 
-        public static int HttpPort => _httpServer?.Port ?? 23456;
+        // ── 公开状态 ──────────────────────────────────────────────────────────
+
+        public static int  HttpPort  => _httpServer?.Port ?? 23456;
+        public static int  WsPort    => HttpPort + 1;
+        public static bool IsRunning => _httpServer?.IsRunning ?? false;
+
+        // ── Dashboard 活动日志 ────────────────────────────────────────────────
+
+        private static readonly List<string> _dashboardLog     = new List<string>();
+        private static readonly object       _dashboardLogLock = new object();
+        private const int MaxDashboardEntries = 100;
+
+        internal static void AddDashboardLog(string message)
+        {
+            lock (_dashboardLogLock)
+            {
+                _dashboardLog.Insert(0, $"[{DateTime.Now:HH:mm:ss}]  {message}");
+                if (_dashboardLog.Count > MaxDashboardEntries)
+                    _dashboardLog.RemoveAt(_dashboardLog.Count - 1);
+            }
+        }
+
+        internal static void ClearDashboardLog()
+        {
+            lock (_dashboardLogLock) { _dashboardLog.Clear(); }
+        }
+
+        /// <summary>返回日志的线程安全快照（新条目在前）。</summary>
+        internal static List<string> GetDashboardLogSnapshot()
+        {
+            lock (_dashboardLogLock) { return new List<string>(_dashboardLog); }
+        }
+
+        // ── 生命周期 ──────────────────────────────────────────────────────────
 
         static UnityEditorServer()
         {
@@ -25,7 +59,21 @@ namespace OpenClaw.UnityPlugin
             Startup();
         }
 
-        private static void Startup()
+        /// <summary>从 Dashboard 窗口手动启动服务器。</summary>
+        public static void StartServer()
+        {
+            if (IsRunning) return;
+            Startup(isManualRestart: true);
+        }
+
+        /// <summary>从 Dashboard 窗口手动停止服务器。</summary>
+        public static void StopServer()
+        {
+            if (!IsRunning) return;
+            Shutdown();
+        }
+
+        private static void Startup(bool isManualRestart = false)
         {
             Debug.Log("[OpenClaw] Starting Unity Editor Plugin...");
 
@@ -45,27 +93,34 @@ namespace OpenClaw.UnityPlugin
             // 4. Console 日志捕获（依赖 EventBroadcaster）
             ConsoleLogger.Initialize();
 
-            // 注意：CompilationListener 通过自己的 [InitializeOnLoad] 静态构造函数初始化，
-            // 无需在此显式调用，已依赖 EventBroadcaster 在前面初始化完毕
+            // 5. 编译监听器
+            // 首次启动：CompilationListener 的 [InitializeOnLoad] 已完成注册，无需重复调用
+            // 手动重启：Shutdown() 已取消注册，需通过 Initialize() 重新订阅
+            if (isManualRestart)
+                CompilationListener.Initialize();
 
-            // 5. 路由器 + Handler 注册
+            // 6. 路由器 + Handler 注册
             var router = new RequestRouter();
             RegisterRoutes(router);
 
-            // 6. HTTP Server（最后启动，端口就绪后开始接受连接）
+            // 7. HTTP Server（最后启动，端口就绪后开始接受连接）
             _httpServer = new HttpServer(router, wsServer);
             if (!_httpServer.Start())
             {
                 Debug.LogError("[OpenClaw] Failed to start HTTP server. Plugin is inactive.");
+                AddDashboardLog("ERROR: Failed to start HTTP server");
                 return;
             }
 
+            var msg = $"Server started — HTTP:{_httpServer.Port}  WS:{_httpServer.Port + 1}";
             Debug.Log($"[OpenClaw] Plugin ready. HTTP: http://127.0.0.1:{_httpServer.Port}/api/v1  WS: ws://127.0.0.1:{_httpServer.Port + 1}/ws");
+            AddDashboardLog(msg);
         }
 
         private static void Shutdown()
         {
             Debug.Log("[OpenClaw] Shutting down...");
+            AddDashboardLog("Server stopped");
             ConsoleLogger.Shutdown();
             CompilationListener.Shutdown();
             EventBroadcaster.Shutdown();

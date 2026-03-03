@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading;
 using UnityEngine;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     /// <summary>
     /// 封装 HttpListener，在后台线程持续接收 HTTP 请求，
@@ -17,7 +17,8 @@ namespace OpenClaw.UnityPlugin
         private readonly IWebSocketServer  _wsServer;
         private volatile bool     _running;
 
-        public int Port { get; private set; }
+        public int  Port      { get; private set; }
+        public bool IsRunning => _running;
 
         public HttpServer(RequestRouter router, IWebSocketServer wsServer)
         {

@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 
-namespace OpenClaw.UnityPlugin
+namespace OpenMCP.UnityPlugin
 {
     public class BuildHandler
     {
