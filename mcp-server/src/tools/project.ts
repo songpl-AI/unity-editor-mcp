@@ -46,4 +46,16 @@ export function registerProjectTools(server: McpServer, client: UnityClient): vo
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return { content: [{ type: "text" as const, text: `Found ${res.data.count} assets:\n${formatAssetList(res.data.assets as any)}` }] };
   });
+
+  server.registerTool("unity_delete_asset", {
+    description: "Delete an asset from the project. Path must be inside Assets/ directory. Be careful: this operation cannot be undone via Unity Undo system.",
+    inputSchema: {
+      path: z.string().describe("Asset path relative to project root (e.g., 'Assets/Scripts/TestScript.cs')"),
+    },
+  }, async ({ path }) => {
+    await client.ensureConnected();
+    const res = await client.post<{ deleted: string }>("/asset/delete", { path });
+    if (!res.ok) throw new Error(`Unity API Error [${res.error?.code}]: ${res.error?.message}`);
+    return { content: [{ type: "text" as const, text: `Successfully deleted asset: ${res.data.deleted}` }] };
+  });
 }

@@ -177,6 +177,7 @@ namespace OpenMCP.UnityPlugin
             router.Register("POST", "/api/v1/asset/create/prefab",     assetHandler.HandleCreatePrefab);
             router.Register("POST", "/api/v1/asset/refresh",           assetHandler.HandleRefresh);
             router.Register("POST", "/api/v1/asset/import",            assetHandler.HandleImport);
+            router.Register("POST", "/api/v1/asset/delete",            assetHandler.HandleDelete);
 
             // Project
             var projectHandler = new ProjectHandler();

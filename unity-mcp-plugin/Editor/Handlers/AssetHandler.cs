@@ -153,6 +153,42 @@ namespace OpenMCP.UnityPlugin
             ResponseHelper.WriteSuccess(ctx.Response, new { imported = req.Path });
         }
 
+        public void HandleDelete(HttpContext ctx)
+        {
+            var req = ctx.ParseBody<DeleteRequest>();
+            if (string.IsNullOrEmpty(req.Path))
+            {
+                ResponseHelper.WriteError(ctx.Response, ErrorCode.InvalidParams, "'path' is required");
+                return;
+            }
+
+            // 安全检查：路径必须在 Assets/ 目录下
+            var normalizedPath = req.Path.Replace("\\", "/");
+            if (!normalizedPath.StartsWith("Assets/", StringComparison.OrdinalIgnoreCase))
+            {
+                ResponseHelper.WriteError(ctx.Response, ErrorCode.FileOutsideProject, "Path must be inside Assets/");
+                return;
+            }
+
+            var success = MainThreadDispatcher.Dispatch(() =>
+            {
+                if (!File.Exists(normalizedPath) && !Directory.Exists(normalizedPath))
+                {
+                    throw new Exception($"Asset not found: {normalizedPath}");
+                }
+                return AssetDatabase.DeleteAsset(normalizedPath);
+            });
+
+            if (success)
+            {
+                ResponseHelper.WriteSuccess(ctx.Response, new { deleted = req.Path });
+            }
+            else
+            {
+                ResponseHelper.WriteError(ctx.Response, ErrorCode.ExecutionFailed, $"Failed to delete asset: {req.Path}");
+            }
+        }
+
         // --- Helpers ---
 
         private static void CollectPrefabComponents(GameObject go, List<object> result, string parentPath = "")
@@ -189,5 +225,6 @@ namespace OpenMCP.UnityPlugin
         private class CreateMaterialRequest { [JsonProperty("path")] public string Path { get; set; } [JsonProperty("shader")] public string Shader { get; set; } }
         private class CreatePrefabRequest   { [JsonProperty("goPath")] public string GoPath { get; set; } [JsonProperty("prefabPath")] public string PrefabPath { get; set; } }
         private class ImportRequest         { [JsonProperty("path")] public string Path { get; set; } }
+        private class DeleteRequest         { [JsonProperty("path")] public string Path { get; set; } }
     }
 }

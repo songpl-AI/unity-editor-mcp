@@ -132,7 +132,7 @@ curl http://127.0.0.1:23456/api/v1/status
 
 ---
 
-## 可用工具（31 个）
+## 可用工具（32 个）
 
 | 工具 | 说明 |
 |------|------|
@@ -155,6 +155,7 @@ curl http://127.0.0.1:23456/api/v1/status
 | `unity_get_project_info` | 获取项目基本信息 |
 | `unity_get_scripts` | 列出所有 C# 脚本及公开 API |
 | `unity_find_assets` | 搜索项目资产 |
+| `unity_delete_asset` | 删除项目资产（需在 Assets/ 目录下）|
 | `unity_get_tags` | 获取所有 Tag |
 | `unity_create_tag` | 创建新 Tag |
 | `unity_set_gameobject_tag` | 为 GameObject 设置 Tag |

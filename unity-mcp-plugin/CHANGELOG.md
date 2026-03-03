@@ -5,6 +5,22 @@ All notable changes to Unity Editor MCP Plugin will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-03-03
+
+### Added
+
+- 新增 Asset 删除功能（`/api/v1/asset/delete`）
+  - MCP 工具：`unity_delete_asset`
+  - 支持删除 Assets/ 目录下的任何资产文件或文件夹
+  - 自动路径安全校验（限制在 Assets/ 目录内）
+  - 自动资产存在性检查
+  - 使用 `AssetDatabase.DeleteAsset()` 实现，确保 Unity 元数据同步
+  - 感谢用户反馈（Bug Report: `BugReports/bug_report_openmcp_asset_delete.md`）
+
+### Changed
+
+- 工具总数从 31 个增加到 32 个
+
 ## [1.0.0] - 2026-03-03
 
 ### Added
@@ -34,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 文件 I/O（读写 Assets/ 目录）
 - 编译控制（触发编译、获取错误）
 - Console 日志获取
-- 资产搜索
+- 资产搜索与删除
 - Tag 管理
 - 输入系统检测
 - Player Settings 查询
