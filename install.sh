@@ -1,7 +1,8 @@
 #!/bin/bash
-# Unity Editor MCP — 安装脚本
-# 用法：bash install.sh
-# 效果：构建 MCP Server，输出各工具的配置内容
+# Unity Editor MCP — Install Script (macOS / Linux)
+# Usage:   bash install.sh
+# Windows: use install.ps1 instead
+# Effect:  builds the MCP Server and prints configuration snippets for each tool
 
 set -e
 
@@ -67,8 +68,9 @@ echo "  │  ~/.claude/settings.json                                        │"
 echo "  └────────────────────────────────────────────────────────────────┘"
 echo ""
 echo "  ┌─ Claude Desktop ───────────────────────────────────────────────┐"
-echo "  │  ~/Library/Application Support/Claude/claude_desktop_config.json│"
-echo "  └────────────────────────────────────────────────────────────────┘"
+echo "  │  macOS: ~/Library/Application Support/Claude/claude_desktop_config.json │"
+echo "  │  Linux: ~/.config/Claude/claude_desktop_config.json                      │"
+echo "  └──────────────────────────────────────────────────────────────────────────┘"
 echo ""
 echo "  ┌─ Cursor ───────────────────────────────────────────────────────┐"
 echo "  │  ~/.cursor/mcp.json  (global)                                   │"
