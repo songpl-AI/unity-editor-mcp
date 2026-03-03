@@ -1,20 +1,24 @@
 {
-  "name": "com.unity-editor-mcp.plugin",
+  "name": "com.openmcp.unity-editor-mcp",
   "version": "1.0.0",
   "displayName": "Unity Editor MCP",
   "description": "HTTP + WebSocket server that enables AI coding tools to control Unity Editor via MCP protocol. Compatible with Claude Code, Cursor, Continue, and any MCP-compatible tool.",
-  "unity": "2021.3",
-  "keywords": ["mcp", "ai", "editor", "claude", "cursor"],
+  "unity": "2020.3",
+  "keywords": ["mcp", "ai", "editor", "claude", "cursor", "trae"],
   "dependencies": {
-    "com.unity.nuget.newtonsoft-json": "3.2.1"
+    "com.unity.nuget.newtonsoft-json": "3.0.2"
   },
   "author": {
-    "name": "",
-    "email": "",
-    "url": ""
+    "name": "songpl",
+    "email": "songbl2023@gmail.com",
+    "url": "https://github.com/songpl-AI"
   },
+  "license": "MIT",
+  "documentationUrl": "https://github.com/songpl-AI/unity-editor-mcp/blob/main/unity-mcp-plugin/README.md",
+  "changelogUrl": "https://github.com/songpl-AI/unity-editor-mcp/blob/main/unity-mcp-plugin/CHANGELOG.md",
+  "licensesUrl": "https://github.com/songpl-AI/unity-editor-mcp/blob/main/unity-mcp-plugin/LICENSE.md",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/songpl-AI/unity-editor-mcp.git"
   }
 }

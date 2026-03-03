@@ -216,9 +216,9 @@ public void HandleCreate(HttpContext ctx) {
 ```
 
 - **日志规范**
-  - 使用 `Debug.Log("[OpenClaw] ...")` 前缀，便于 Console 过滤
-  - 启动/停止服务器：`[OpenClaw] Starting...` / `[OpenClaw] Shutting down...`
-  - 错误：`[OpenClaw] Error: ...`
+  - 使用 `Debug.Log("[OpenMCP] ...")` 前缀，便于 Console 过滤
+  - 启动/停止服务器：`[OpenMCP] Starting...` / `[OpenMCP] Shutting down...`
+  - 错误：`[OpenMCP] Error: ...`
 
 ### API 响应格式（不得改变）
 
@@ -418,7 +418,7 @@ npm run build
 # 测试 Unity Plugin
 # 1. 复制 unity-mcp-plugin/ 到测试 Unity 项目
 # 2. 打开 Unity Editor
-# 3. 检查 Console 是否有 "[OpenClaw] Plugin ready" 日志
+# 3. 检查 Console 是否有 "[OpenMCP] Plugin ready" 日志
 
 # 打包发布（仅在 Git 仓库中）
 git tag v1.0.0
@@ -508,13 +508,13 @@ private static void Cleanup() {
 
 ```csharp
 // 1. 在 Handler 中添加日志
-Debug.Log($"[OpenClaw] HandleCreate: name={req.Name}");
+Debug.Log($"[OpenMCP] HandleCreate: name={req.Name}");
 
 // 2. 在 Unity Console 中过滤日志
-// Filter: "[OpenClaw]"
+// Filter: "[OpenMCP]"
 
 // 3. 查看请求详情
-Debug.Log($"[OpenClaw] Request body: {ctx.RequestBody}");
+Debug.Log($"[OpenMCP] Request body: {ctx.RequestBody}");
 ```
 
 ### MCP Server 调试

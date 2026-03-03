@@ -1,0 +1,51 @@
+# Changelog
+
+All notable changes to Unity Editor MCP Plugin will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.0] - 2026-03-03
+
+### Added
+
+- 初始发布版本
+- HTTP REST API 服务器（31 个端点）
+- WebSocket 服务器（事件推送）
+- Dashboard 窗口（Window > Open MCP）
+- 自动安装 Newtonsoft.Json 依赖（v3.0.2，兼容 Unity 2019.4+）
+- Unity 2020.3+ 兼容性支持
+- Domain Reload 自动清理机制
+- 主线程调度器（MainThreadDispatcher）
+- Undo 系统集成
+
+### Supported Operations
+
+- 场景管理（获取信息、层级结构、保存场景）
+- GameObject 操作（创建、删除、查找、变换）
+- 组件管理（获取、添加、设置属性）
+- 文件 I/O（读写 Assets/ 目录）
+- 编译控制（触发编译、获取错误）
+- Console 日志获取
+- 资产搜索
+- Tag 管理
+- 输入系统检测
+- Player Settings 查询
+- 渲染管线检测
+- 材质属性操作
+- 包管理（列出、安装、卸载）
+
+### Security
+
+- 服务器仅绑定 127.0.0.1（不暴露外网）
+- 文件操作限制在 Assets/ 目录
+- Host 头严格校验
+
+## [Unreleased]
+
+### Planned
+
+- 预制体实例化支持
+- Animator 参数设置
+- Physics 模拟控制
+- 更多组件属性编辑器

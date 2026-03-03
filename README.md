@@ -70,8 +70,10 @@ bash install.sh
 Unity > Window > Package Manager > `+` > Add package from git URL：
 
 ```
-https://github.com/yourname/unity-editor-mcp.git?path=unity-mcp-plugin
+https://github.com/songpl-AI/unity-editor-mcp.git?path=/unity-mcp-plugin
 ```
+
+> 注意：使用 `.git` 结尾并通过 `?path=` 参数指定子目录。Unity 会自动处理依赖。
 
 **方式 B — 手动复制**
 
@@ -88,13 +90,13 @@ Copy-Item -Recurse unity-mcp-plugin C:\path\to\YourUnityProject\Assets\
 然后在 `Packages/manifest.json` 的 `dependencies` 中添加：
 
 ```json
-"com.unity.nuget.newtonsoft-json": "3.2.1"
+"com.unity.nuget.newtonsoft-json": "3.0.2"
 ```
 
 重新打开 Unity，Console 出现以下日志表示安装成功：
 
 ```
-[OpenClaw] Plugin ready. HTTP: http://127.0.0.1:23456/api/v1  WS: ws://127.0.0.1:23457/ws
+[OpenMCP] Plugin ready. HTTP: http://127.0.0.1:23456/api/v1  WS: ws://127.0.0.1:23457/ws
 ```
 
 ---
@@ -119,7 +121,7 @@ curl http://127.0.0.1:23456/api/v1/status
 
 插件导入后，Unity 菜单栏会出现：
 
-**Window > OpenClaw MCP**
+**Window > Open MCP**
 
 窗口功能：
 - 实时显示服务器运行状态（绿色 Running / 红色 Stopped）
@@ -196,7 +198,7 @@ Unity Editor
 ## 常见问题
 
 **`curl` 返回 `Connection refused`**
-→ Unity Editor 未打开，或插件未成功导入。检查 Console 是否有 `[OpenClaw] Plugin ready` 日志。
+→ Unity Editor 未打开，或插件未成功导入。检查 Console 是否有 `[OpenMCP] Plugin ready` 日志。
 
 **`curl http://localhost:...` 返回 400**
 → 必须使用 `127.0.0.1`，不能用 `localhost`（HTTP Server 对 Host 头做严格校验）。
