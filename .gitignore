@@ -2,7 +2,6 @@ mcp-server/node_modules/
 mcp-server/dist/
 
 # Unity
-unity-mcp-plugin/**/*.meta
 unity-mcp-plugin/Library/
 unity-mcp-plugin/Temp/
 unity-mcp-plugin/obj/
