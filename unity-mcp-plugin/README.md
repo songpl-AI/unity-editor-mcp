@@ -162,6 +162,22 @@ curl http://127.0.0.1:23456/api/v1/status
 ### 依赖包
 - com.unity.nuget.newtonsoft-json: 3.0.2（兼容 Unity 2019.4+）
 
+### 截图 API（`GET /api/v1/screenshot`）
+
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| `view` | string | `game`（默认）/ `game_window` / `scene` |
+| `width` | int | 截图宽度，默认 1920（`game_window` 模式忽略）|
+| `height` | int | 截图高度，默认 1080（`game_window` 模式忽略）|
+
+返回：`{ "ok": true, "data": { "base64": "<PNG base64>" } }`
+
+| `view` 值 | 原理 | 适用模式 |
+|-----------|------|----------|
+| `game` | 渲染场景摄像机（Play 模式优先 ScreenCapture）| Edit + Play |
+| `game_window` | 反射读取 Game View 面板 RenderTexture | Edit 模式，需 Game View 已打开 |
+| `scene` | 渲染 Scene View 摄像机 | Edit + Play |
+
 ### 架构
 ```
 AI Tool (Claude Code / Cursor / ...)

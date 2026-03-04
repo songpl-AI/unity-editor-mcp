@@ -132,7 +132,7 @@ curl http://127.0.0.1:23456/api/v1/status
 
 ---
 
-## 可用工具（32 个）
+## 可用工具（33 个）
 
 | 工具 | 说明 |
 |------|------|
@@ -168,6 +168,21 @@ curl http://127.0.0.1:23456/api/v1/status
 | `unity_list_packages` | 列出已安装 Unity 包 |
 | `unity_install_package` | 安装 Unity 包（含等待 Domain Reload）|
 | `unity_remove_package` | 卸载 Unity 包 |
+| `unity_take_screenshot` | 截图（支持 Game View / Game View 面板 / Scene View，Edit 和 Play 模式均可用）|
+
+### 截图说明（`unity_take_screenshot`）
+
+通过 `view` 参数选择截图模式：
+
+| `view` 值 | 原理 | 适用模式 | `width` / `height` |
+|-----------|------|----------|--------------------|
+| `game`（默认）| 渲染场景中 depth 最高的摄像机到 RenderTexture | Edit + Play | 有效（默认 1920×1080）|
+| `game_window` | 通过反射读取 Game View 面板内部 RenderTexture | Edit 模式 | 忽略（取 Game View 实际分辨率）|
+| `scene` | 渲染 Scene View 摄像机到 RenderTexture | Edit + Play | 有效（默认 1920×1080）|
+
+> **`game` 模式行为细节：** Play 模式下优先使用 `ScreenCapture`（包含后处理效果）；Edit 模式下自动查找激活摄像机渲染，无需点击 Play。
+>
+> **`game_window` 模式注意：** 依赖 Unity 内部私有字段（通过反射访问），不同 Unity 版本可能存在兼容性差异。若失败，错误信息会提示改用 `game` 模式。
 
 ---
 

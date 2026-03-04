@@ -199,6 +199,10 @@ namespace OpenMCP.UnityPlugin
             router.Register("POST", "/api/v1/build/run",      buildHandler.HandleRun);
             router.Register("GET",  "/api/v1/build/status",   buildHandler.HandleStatus);
 
+            // Screenshot
+            var screenshotHandler = new ScreenshotHandler();
+            router.Register("GET", "/api/v1/screenshot", screenshotHandler.HandleCapture);
+
             // Tag
             var tagHandler = new TagHandler();
             router.Register("GET",  "/api/v1/tag/list",   tagHandler.HandleGetTags);
